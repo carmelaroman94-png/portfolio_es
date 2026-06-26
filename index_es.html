@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bianca Carmela Roman — Portfolio de Ciencia de Datos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --sand:    #E3D6C8;
+      --sage:    #8D957E;
+      --slate:   #788990;
+      --forest:  #2E3628;
+      --cream:   #F7F4F0;
+      --white:   #FFFFFF;
+      --text-1:  #1E2418;
+      --text-2:  #4A5240;
+      --text-3:  #7A8570;
+      --border:  #D6C9B8;
+      --sidebar-w: 280px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--text-1);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      position: fixed;
+      top: 0; left: 0;
+      width: var(--sidebar-w);
+      height: 100vh;
+      background: var(--forest);
+      color: var(--white);
+      display: flex;
+      flex-direction: column;
+      padding: 36px 28px;
+      overflow-y: auto;
+      z-index: 100;
+    }
+
+    .sidebar-name {
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      margin-bottom: 6px;
+      color: var(--sand);
+    }
+
+    .sidebar-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.63rem;
+      color: var(--sage);
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      margin-bottom: 16px;
+    }
+
+    .sidebar-meta {
+      font-size: 0.75rem;
+      line-height: 1.75;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .sidebar-divider {
+      width: 28px;
+      height: 2px;
+      background: var(--sage);
+      margin: 22px 0;
+      border-radius: 2px;
+    }
+
+    .nav-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: rgba(227,214,200,0.3);
+      margin-bottom: 12px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 9px 0;
+      cursor: pointer;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(227,214,200,0.07);
+      transition: all 0.2s;
+    }
+
+    .nav-item:hover .nav-item-title { color: var(--sage); }
+    .nav-item:hover .nav-num { color: var(--sage); }
+
+    .nav-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      color: rgba(227,214,200,0.2);
+      margin-top: 2px;
+      flex-shrink: 0;
+      transition: color 0.2s;
+    }
+
+    .nav-item-title {
+      font-size: 0.77rem;
+      font-weight: 500;
+      color: rgba(227,214,200,0.7);
+      line-height: 1.3;
+      transition: color 0.2s;
+    }
+
+    .nav-item-tag {
+      font-size: 0.61rem;
+      color: rgba(227,214,200,0.3);
+      margin-top: 2px;
+    }
+
+    .sidebar-footer { margin-top: auto; padding-top: 24px; }
+
+    /* ── MAIN ── */
+    .main { margin-left: var(--sidebar-w); flex: 1; }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--forest);
+      color: var(--white);
+      padding: 76px 64px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -40px; right: 40px;
+      width: 260px; height: 260px;
+      border-radius: 50%;
+      border: 1px solid rgba(141,149,126,0.12);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--sage);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .hero-headline {
+      font-size: clamp(1.9rem, 3.8vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 18px;
+      max-width: 640px;
+      color: var(--sand);
+    }
+
+    .hero-headline em {
+      font-style: normal;
+      color: var(--sage);
+    }
+
+    .hero-sub {
+      font-size: 0.95rem;
+      color: rgba(227,214,200,0.55);
+      max-width: 540px;
+      line-height: 1.75;
+      margin-bottom: 28px;
+    }
+
+    /* ── HERO LANGUAGES ── */
+    .hero-languages {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+
+    .hero-lang-card {
+      background: rgba(227,214,200,0.07);
+      border: 1px solid rgba(141,149,126,0.25);
+      border-radius: 8px;
+      padding: 8px 14px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero-lang-name {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--sand);
+      line-height: 1.2;
+    }
+
+    .hero-lang-level {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--sage);
+      margin-top: 2px;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 0;
+      flex-wrap: wrap;
+      border: 1px solid rgba(141,149,126,0.2);
+      border-radius: 12px;
+      overflow: hidden;
+      width: fit-content;
+    }
+
+    .stat {
+      display: flex;
+      flex-direction: column;
+      padding: 16px 28px;
+      border-right: 1px solid rgba(141,149,126,0.15);
+    }
+
+    .stat:last-child { border-right: none; }
+
+    .stat-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.6rem;
+      font-weight: 500;
+      color: var(--sand);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.68rem;
+      color: rgba(227,214,200,0.4);
+      margin-top: 5px;
+      letter-spacing: 0.03em;
+    }
+
+    /* ── SECTION ── */
+    .section { padding: 60px 64px; }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      margin-bottom: 36px;
+    }
+
+    .section-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--text-3);
+      letter-spacing: 0.06em;
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-1);
+    }
+
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── PROJECT CARD ── */
+    .project-card {
+      background: var(--white);
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      margin-bottom: 36px;
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+
+    .project-card:hover {
+      box-shadow: 0 16px 48px rgba(46,54,40,0.1);
+      transform: translateY(-2px);
+    }
+
+    .project-card.featured {
+      border-color: var(--sage);
+      border-width: 2px;
+    }
+
+    .project-meta { padding: 26px 30px 18px; }
+
+    .project-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--slate);
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      margin-bottom: 8px;
+    }
+
+    .project-badge.featured-badge { color: var(--sage); }
+
+    .badge-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .project-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-1);
+      margin-bottom: 8px;
+      line-height: 1.25;
+    }
+
+    .project-desc {
+      font-size: 0.86rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      max-width: 640px;
+    }
+
+    .project-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 14px;
+    }
+
+    .tool-tag {
+      background: var(--sand);
+      color: var(--forest);
+      font-size: 0.67rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .project-insight {
+      background: #F2EDE5;
+      border-left: 3px solid var(--sage);
+      padding: 13px 20px;
+      margin: 0 30px 18px;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .insight-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--sage);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 4px;
+    }
+
+    .insight-text {
+      font-size: 0.81rem;
+      color: var(--text-1);
+      font-weight: 500;
+      line-height: 1.55;
+    }
+
+    .embed-label {
+      background: var(--forest);
+      color: rgba(227,214,200,0.5);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      padding: 8px 30px;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .embed-label::before {
+      content: '▶';
+      color: var(--sage);
+      font-size: 0.48rem;
+    }
+
+    .project-embed-container iframe {
+      width: 100%;
+      height: 700px;
+      border: none;
+      display: block;
+    }
+
+    .project-embed-container iframe.short { height: 500px; }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+
+    .about-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px;
+    }
+
+    .about-card-title {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--text-1);
+      margin-bottom: 7px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .about-card-title::before {
+      content: '';
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--sage);
+      flex-shrink: 0;
+    }
+
+    .about-card-text {
+      font-size: 0.8rem;
+      color: var(--text-2);
+      line-height: 1.65;
+    }
+
+    .skills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .skill-pill {
+      background: var(--forest);
+      border: 1px solid var(--forest);
+      color: var(--sand);
+      font-size: 0.74rem;
+      font-weight: 500;
+      padding: 5px 13px;
+      border-radius: 24px;
+      transition: all 0.2s;
+      cursor: default;
+    }
+
+    .skill-pill:hover {
+      background: var(--sage);
+      border-color: var(--sage);
+      color: var(--forest);
+    }
+
+    /* ── CONTACT ── */
+    .contact-section {
+      background: var(--forest);
+      padding: 60px 64px;
+      color: var(--white);
+    }
+
+    .contact-links { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(227,214,200,0.08);
+      border: 1px solid rgba(227,214,200,0.15);
+      color: var(--sand);
+      text-decoration: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 0.81rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .contact-link:hover {
+      background: var(--sage);
+      border-color: var(--sage);
+      color: var(--forest);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      :root { --sidebar-w: 0px; }
+      .sidebar { display: none; }
+      .main { margin-left: 0; }
+      .hero, .section { padding: 40px 24px; }
+      .about-grid { grid-template-columns: 1fr; }
+      .hero-stats { width: 100%; }
+      .stat { padding: 14px 20px; }
+      .contact-section { padding: 48px 24px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .project-card { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div style="margin-bottom:36px;">
+    <div class="sidebar-name">Bianca Carmela Roman</div>
+    <div class="sidebar-title">Ciencia de Datos · BI · Analítica</div>
+    <div class="sidebar-meta">
+      <a class="contact-link" href="mailto:carmelaroman94@gmail.com" style="font-size:0.72rem; padding:7px 12px;">✉ carmelaroman94@gmail.com</a>
+      <a class="contact-link" href="https://linkedin.com/in/carmelaroman" target="_blank" style="font-size:0.72rem; padding:7px 12px;">in linkedin.com/in/carmelaroman</a>
+    </div>
+  </div>
+
+  <div class="sidebar-divider"></div>
+
+  <div class="nav-label">Proyectos</div>
+
+  <a class="nav-item" href="#project-ciclos">
+    <span class="nav-num">01</span>
+    <div>
+      <div class="nav-item-title">Análisis del Ciclo de Ventas</div>
+      <div class="nav-item-tag">Python · Plotly · CRM</div>
+    </div>
+  </a>
+  <a class="nav-item" href="#project-cloud">
+    <span class="nav-num">02</span>
+    <div>
+      <div class="nav-item-title">Unidad de Negocio Cloud</div>
+      <div class="nav-item-tag">Python · Plotly · Estadística</div>
+    </div>
+  </a>
+  <a class="nav-item" href="#project-oportunidades">
+    <span class="nav-num">03</span>
+    <div>
+      <div class="nav-item-title">Análisis Exploratorio CRM</div>
+      <div class="nav-item-tag">Python · Plotly · CRM</div>
+    </div>
+  </a>
+  <a class="nav-item" href="#project-childlabour">
+    <span class="nav-num">04</span>
+    <div>
+      <div class="nav-item-title">Trabajo Infantil y Comercio</div>
+      <div class="nav-item-tag">Power BI · Python · Datos ONU</div>
+    </div>
+  </a>
+  <a class="nav-item" href="#project-sentiment">
+    <span class="nav-num">05</span>
+    <div>
+      <div class="nav-item-title">Análisis de Sentimiento</div>
+      <div class="nav-item-tag">Power BI · NLP · YouTube API</div>
+    </div>
+  </a>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-eyebrow">Portfolio de Ciencia de Datos</div>
+    <h1 class="hero-headline">
+      Transformar datos en<br><em>decisiones que importan</em>
+    </h1>
+    <p class="hero-sub">
+      Este portfolio reúne cinco proyectos donde los datos son la herramienta principal para responder preguntas del mundo real. Incluye análisis de datos de negocio en entornos Microsoft 365 para identificar mejoras de procesos, el desarrollo de bases de datos internacionales para investigación social sobre trabajo infantil, y proyectos de análisis electoral y de sentimiento orientados a comprender tendencias y comportamientos.
+    </p>
+
+    <div class="hero-languages">
+      <div class="hero-lang-card">
+        <span class="hero-lang-name">Español</span>
+        <span class="hero-lang-level">Nativo</span>
+      </div>
+      <div class="hero-lang-card">
+        <span class="hero-lang-name">Italiano</span>
+        <span class="hero-lang-level">C1</span>
+      </div>
+      <div class="hero-lang-card">
+        <span class="hero-lang-name">Inglés</span>
+        <span class="hero-lang-level">B2</span>
+      </div>
+      <div class="hero-lang-card">
+        <span class="hero-lang-name">Alemán</span>
+        <span class="hero-lang-level">A2</span>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-num">5</span>
+        <span class="stat-label">proyectos</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">2+</span>
+        <span class="stat-label">años en roles de datos</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="section" id="projects">
+    <div class="section-header">
+      <span class="section-num">§01</span>
+      <h2 class="section-title">Proyectos</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <!-- 01 CICLOS -->
+    <div class="project-card featured" id="project-ciclos">
+      <div class="project-meta">
+        <div class="project-badge featured-badge"><span class="badge-dot"></span>Destacado · Analítica CRM</div>
+        <h3 class="project-title">Análisis del Ciclo de Ventas — Embudo Comercial Completo</h3>
+        <p class="project-desc">Análisis integral del pipeline comercial de una empresa tecnológica utilizando datos del CRM de Microsoft 365. Abarca el recorrido completo desde el origen del lead hasta el resultado final, con foco en la eficiencia del embudo, las tasas de conversión y la estabilidad de los ciclos de venta por unidad de negocio y tipo de oportunidad.</p>
+        <div class="project-tools">
+          <span class="tool-tag">Python</span>
+          <span class="tool-tag">Plotly</span>
+          <span class="tool-tag">MS365 CRM</span>
+          <span class="tool-tag">Análisis de Embudo</span>
+          <span class="tool-tag">Boxplot</span>
+          <span class="tool-tag">Diagrama Sankey</span>
+          <span class="tool-tag">Estadística Descriptiva</span>
+        </div>
+      </div>
+      <div class="project-insight">
+        <div class="insight-label">Análisis clave</div>
+        <div class="insight-text">Se identificaron patrones de fuga en el embudo de ventas en todas las etapas, se compararon las distribuciones de ciclos (potencial vs. oportunidad vs. total) mediante boxplots, y se realizó una segmentación por unidad de negocio y tipo de oportunidad (desde una perspectiva general hasta una más específica).</div>
+      </div>
+      <div class="project-embed-container">
+        <div class="embed-label">Dashboard Interactivo — Análisis del Ciclo de Ventas</div>
+        <iframe src="dashboard_ciclos.html" title="Análisis del Ciclo de Ventas"></iframe>
+      </div>
+    </div>
+
+    <!-- 02 CLOUD -->
+    <div class="project-card" id="project-cloud">
+      <div class="project-meta">
+        <div class="project-badge"><span class="badge-dot"></span>Análisis de Unidad de Negocio · Estadística</div>
+        <h3 class="project-title">Unidad de Negocio Cloud — Tiempo de Ciclo y Eficiencia</h3>
+        <p class="project-desc">Este análisis se centra en el ciclo de ventas de la unidad de negocio Cloud, comparando los tiempos de cierre entre oportunidades ganadas y perdidas. Se identifican y excluyen valores extremos para obtener promedios que reflejen mejor el comportamiento real de los datos. Además, se explora la relación entre la duración del ciclo de venta y el valor económico de la operación. El estudio está segmentado tanto por canal de adquisición como por las distintas categorías dentro de la unidad Cloud, con el objetivo de comprender mejor las dinámicas específicas de cada segmento.</p>
+        <div class="project-tools">
+          <span class="tool-tag">Python</span>
+          <span class="tool-tag">Plotly</span>
+          <span class="tool-tag">Eliminación de Outliers</span>
+          <span class="tool-tag">Scatterplot</span>
+          <span class="tool-tag">Heatmap</span>
+          <span class="tool-tag">Atribución de Canal</span>
+        </div>
+      </div>
+      <div class="project-insight">
+        <div class="insight-label">Hallazgo clave</div>
+        <div class="insight-text">Las oportunidades de venta ganadas muestran ciclos de venta significativamente más cortos que las perdidas. Esto sugiere que, más allá de cierto umbral de tiempo, la probabilidad de cerrar una operación disminuye notablemente. Esta hipótesis fue explorada con mayor profundidad en otros análisis.<br><br>Adicionalmente, se identificó una ineficiencia significativa: existen ciclos de venta muy largos que consumen una cantidad considerable de recursos pero que finalmente resultan en operaciones de bajo valor económico.</div>
+      </div>
+      <div class="project-embed-container">
+        <div class="embed-label">Dashboard Interactivo — Unidad de Negocio Cloud</div>
+        <iframe src="dashboard_cloud.html" title="Unidad de Negocio Cloud"></iframe>
+      </div>
+    </div>
+
+    <!-- 03 OPORTUNIDADES -->
+    <div class="project-card" id="project-oportunidades">
+      <div class="project-meta">
+        <div class="project-badge"><span class="badge-dot"></span>Analítica de Pipeline · Series Temporales</div>
+        <h3 class="project-title">Análisis exploratorio inicial del CRM de ventas</h3>
+        <p class="project-desc">Se examina la evolución temporal de la creación de oportunidades de venta, así como la distribución de los ciclos de venta en las oportunidades abiertas. También se identifican los tipos de oportunidad más frecuentes, segmentados por unidad de negocio, y se analiza cómo varía esta frecuencia según si están orientadas al sector público, privado o ambos.<br><br>Finalmente, se exploran las tasas de éxito y fracaso en las oportunidades de venta de cada unidad de negocio, junto con la distribución de los ciclos de venta para las operaciones ganadas.</p>
+        <div class="project-tools">
+          <span class="tool-tag">Python</span>
+          <span class="tool-tag">Plotly</span>
+          <span class="tool-tag">Series Temporales</span>
+          <span class="tool-tag">MS365 CRM</span>
+          <span class="tool-tag">KPIs de Pipeline</span>
+        </div>
+      </div>
+      <div class="project-insight">
+        <div class="insight-label">Hallazgo clave</div>
+        <div class="insight-text">A través del análisis temporal se identificó un caso de éxito destacado en una campaña de marketing que tuvo un impacto significativo en una unidad de negocio específica. Este hallazgo fue especialmente relevante, ya que no había sido considerado previamente. Además, ese éxito se concentró precisamente en la unidad que también muestra la mayor tasa de fracaso, lo que la convierte en un área clave para prestar mayor atención y refuerzo.<br><br>Asimismo, se identificaron oportunidades de venta que permanecen abiertas durante períodos excesivamente largos y consumen una cantidad considerable de recursos. Estos casos fueron señalados y segmentados en una base de datos específica para su análisis posterior con los responsables comerciales.<br><br>Por otro lado, uno de los objetivos estratégicos de la empresa para ese año era incrementar las ventas en el sector público. Sin embargo, se observó que los productos están orientados principalmente al sector privado o a ambos mercados, sin servicios diseñados específicamente para el sector público. Este hallazgo fue compartido con los equipos de marketing y dirección para apoyar el desarrollo de estrategias mejor alineadas con los objetivos anuales.<br><br>Finalmente, se observó una diferencia significativa en la distribución de los ciclos de venta, tanto en las oportunidades abiertas como en las cerradas (ganadas y perdidas), lo que pone de manifiesto la necesidad de un análisis más segmentado y diferenciado.</div>
+      </div>
+      <div class="project-embed-container">
+        <div class="embed-label">Dashboard Interactivo — Pipeline de Oportunidades</div>
+        <iframe src="dashboard_oportunidades.html" title="Pipeline de Oportunidades" class="short"></iframe>
+      </div>
+    </div>
+
+    <!-- 04 CHILD LABOUR -->
+    <div class="project-card" id="project-childlabour">
+      <div class="project-meta">
+        <div class="project-badge"><span class="badge-dot"></span>Investigación Internacional · Power BI</div>
+        <h3 class="project-title">Trabajo Infantil y Flujos de Comercio Internacional</h3>
+        <p class="project-desc">Proyecto de investigación para Development International (Alemania). Se consolidaron datasets del U.S. Census Bureau, el U.S. Department of Labor y la OMC usando Python y Excel Power Query en un repositorio unificado. Se diseñaron ratios personalizados y se visualizaron patrones globales en los flujos de comercio vinculados al trabajo infantil, por sector y región.</p>
+        <div class="project-tools">
+          <span class="tool-tag">Power BI</span>
+          <span class="tool-tag">DAX</span>
+          <span class="tool-tag">Excel</span>
+          <span class="tool-tag">Microsoft Power Query</span>
+          <span class="tool-tag">Ratios</span>
+        </div>
+      </div>
+      <div class="project-insight">
+        <div class="insight-label">Alcance</div>
+        <div class="insight-text">Se cruzaron fuentes internacionales para identificar patrones de importación asociados al trabajo infantil. Se diseñaron ratios personalizados para medir la exposición por categoría de producto, con desgloses temporales y regionales.</div>
+      </div>
+      <div class="project-embed-container">
+        <div class="embed-label">Reporte Power BI — Trabajo Infantil y Comercio</div>
+        <iframe src="https://app.powerbi.com/view?r=eyJrIjoiMzcyMThjM2ItOGJhOS00YmM1LTk2OTktMTk0YTRmOTA1MjZmIiwidCI6Ijg3YmNjZDBkLTdiMjUtNGUzZC04OWZiLWMyYWI5M2E2OGVjOCIsImMiOjh9" allowFullScreen="true" title="Reporte Trabajo Infantil"></iframe>
+      </div>
+    </div>
+
+    <!-- 05 SENTIMENT -->
+    <div class="project-card" id="project-sentiment">
+      <div class="project-meta">
+        <div class="project-badge"><span class="badge-dot"></span>NLP · Datos Sociales · Power BI</div>
+        <h3 class="project-title">Análisis de Sentimiento Político — Elecciones EE.UU. 2016</h3>
+        <p class="project-desc">Análisis de sentimiento de comentarios de YouTube recopilados mediante la YouTube Data API, enfocado en el discurso político en torno a las elecciones presidenciales de EE.UU. de 2016. Se aplicaron técnicas de NLP para clasificar el sentimiento de los comentarios y se visualizaron los patrones de distribución y la evolución temporal en Power BI.</p>
+        <div class="project-tools">
+          <span class="tool-tag">Power BI</span>
+          <span class="tool-tag">YouTube API</span>
+          <span class="tool-tag">NLP</span>
+          <span class="tool-tag">Análisis de Sentimiento</span>
+          <span class="tool-tag">Datos Sociales</span>
+          <span class="tool-tag">DAX</span>
+          <span class="tool-tag">Machine Learning</span>
+        </div>
+      </div>
+      <div class="project-embed-container">
+        <div class="embed-label">Reporte Power BI — Análisis de Sentimiento Político</div>
+        <iframe src="https://app.powerbi.com/view?r=eyJrIjoiMWMyZTlmNDItZjk0OS00NTAxLThiMmUtNjY4OTIxNzMxYjc3IiwidCI6Ijg3YmNjZDBkLTdiMjUtNGUzZC04OWZiLWMyYWI5M2E2OGVjOCIsImMiOjh9" allowFullScreen="true" title="Análisis de Sentimiento Político"></iframe>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section" id="about" style="background:var(--white); border-top:1px solid var(--border);">
+    <div class="section-header">
+      <span class="section-num">§02</span>
+      <h2 class="section-title">Formación y Habilidades</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-card">
+        <div class="about-card-title">Ciencia de Datos y Analítica</div>
+        <div class="about-card-text">Máster en Ciencia de Datos aplicada a Ciencias Sociales (Universidad de Granada, 2026). Especialización en el ciclo de vida completo del dato — desde la recolección y limpieza hasta el modelado, la visualización y la comunicación con stakeholders.</div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-title">Gestión Ágil de Proyectos</div>
+        <div class="about-card-text">Más de 5 años gestionando proyectos interdisciplinares en el sector público, consultoría y tecnología. Certificada en PMI y PM4R. Experiencia conectando equipos técnicos con la toma de decisiones estratégica.</div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-title">Investigación Internacional</div>
+        <div class="about-card-text">Experiencia trabajando con datasets internacionales (ONU, OIT, OMC, U.S. Census Bureau) en Alemania, Argentina y España. La formación en Ciencia Política aporta una perspectiva de investigación social al trabajo con datos.</div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-title">Stack Técnico</div>
+        <div class="about-card-text">Python (pandas, scikit-learn, Plotly), SQL, R, Microsoft Power BI, DAX, Excel Power Query, MongoDB. Experiencia con sistemas CRM y ecosistemas Microsoft 365.</div>
+      </div>
+    </div>
+
+    <div class="section-header" style="margin-top:8px; margin-bottom:18px;">
+      <span class="section-num" style="font-size:0.62rem;">HERRAMIENTAS</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="skills-grid">
+      <span class="skill-pill">Python</span>
+      <span class="skill-pill">Power BI</span>
+      <span class="skill-pill">SQL</span>
+      <span class="skill-pill">Machine Learning</span>
+      <span class="skill-pill">R</span>
+      <span class="skill-pill">Plotly</span>
+      <span class="skill-pill">DAX</span>
+      <span class="skill-pill">Excel Power Query</span>
+      <span class="skill-pill">scikit-learn</span>
+      <span class="skill-pill">Agile / PM4R</span>
+      <span class="skill-pill">Gestión de Stakeholders</span>
+      <span class="skill-pill">Storytelling de Datos</span>
+    </div>
+
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section" id="contact">
+    <div class="section-header" style="margin-bottom:20px;">
+      <span class="section-num" style="color:rgba(227,214,200,0.3);">§03</span>
+      <h2 class="section-title" style="color:var(--sand); font-size:1.3rem; margin-bottom:0;">Trabajemos juntos</h2>
+      <div class="section-line" style="background:rgba(227,214,200,0.1);"></div>
+    </div>
+  </section>
+
+</main>
+</body>
+</html>
